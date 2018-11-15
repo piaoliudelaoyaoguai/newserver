@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centit.server.dingtalk.manager.dao.UserSyncDao" >
+
+    <resultMap id="BaseResultMap" type="com.centit.server.dingtalk.manager.po.UserSync" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+        <result column="userid" property="userid" jdbcType="VARCHAR" />
+        <result column="usernumber" property="usernumber" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+        <result column="workplace" property="workplace" jdbcType="VARCHAR" />
+        <result column="tel" property="tel" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="position" property="position" jdbcType="VARCHAR" />
+        <result column="jobnumber" property="jobnumber" jdbcType="VARCHAR" />
+        <result column="createuserid" property="createuserid" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+        <result column="updateuserid" property="updateuserid" jdbcType="VARCHAR" />
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    
+    <!--  查询详情 -->
+    <select id="queryDetail" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.UserSync">
+	    <![CDATA[
+	    	select
+			    u.id as id,
+			    u.corpid as corpid,
+			    u.userid as userid,
+			    u.usernumber as usernumber,
+		        u.password as password,
+		        u.username as username,
+		        u.mobile as mobile,
+		        u.avatar as avatar,
+		        u.workplace as workplace,
+		        u.tel as tel,
+		        u.remark as remark,
+		        u.position as position,
+		        u.jobnumber as jobnumber,
+		        u.createuserid as createuserid,
+		        u.updateuserid as updateuserid,
+		        date_format(u.createtime,'%Y-%m-%d %T') as createtime,
+		        date_format(u.updatetime,'%Y-%m-%d %T') as updatetime
+	    	from t_dtsm_user u
+	    ]]>
+	    <where>
+			<![CDATA[
+				and u.corpid = #{corpid ,jdbcType=VARCHAR }
+				and u.userid = #{userid ,jdbcType=VARCHAR }
+			]]>
+		</where>
+	</select>
+	
+    <!--  查询列表 -->
+    <select id="queryList" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.UserSync">
+	    <![CDATA[
+	    	select
+			    u.id as id,
+			    u.corpid as corpid,
+			    u.userid as userid,
+			    u.usernumber as usernumber,
+		        u.password as password,
+		        u.username as username,
+		        u.mobile as mobile,
+		        u.avatar as avatar,
+		        u.workplace as workplace,
+		        u.tel as tel,
+		        u.remark as remark,
+		        u.position as position,
+		        u.jobnumber as jobnumber,
+		        u.createuserid as createuserid,
+		        u.updateuserid as updateuserid,
+		        date_format(u.createtime,'%Y-%m-%d %T') as createtime,
+		        date_format(u.updatetime,'%Y-%m-%d %T') as updatetime
+	    	from t_dtsm_user u
+	    ]]>
+	    <where>
+	    	<if test="corpid != '' and corpid != null" >
+				<![CDATA[
+					and u.corpid = #{corpid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+		</where>
+	</select>
+
+    <!--  查询列表（分页） -->
+    <select id="queryListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+   		<!--  关联t_mt_user_facepic是因为后面用了 order by uf.faceassetid，这样查出来的列表没有头像的在前面，有头像的在后面 -->
+	    <![CDATA[
+	    	select
+			    u.id as id,
+			    u.corpid as corpid,
+			    u.userid as userid,
+			    u.usernumber as usernumber,
+		        u.password as password,
+		        u.username as username
+	    	from t_dtsm_user u
+	    	left join t_dtsm_user_dept ud on u.userid = ud.userid
+			left join t_mt_user_facepic uf on u.userid = uf.userid
+	    ]]>
+	    <where>
+			<![CDATA[
+				and u.corpid = #{corpid ,jdbcType=VARCHAR }
+			]]>
+			<if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					and ud.deptid = #{deptid,jdbcType=VARCHAR}
+				]]>
+            </if>
+			<if test="username != '' and username != null" >
+                <![CDATA[
+					and u.username like CONCAT(CONCAT('%',#{username ,jdbcType=VARCHAR}),'%')
+				]]>
+            </if>
+		</where>
+		<![CDATA[
+	         order by uf.faceassetid limit #{pageNum, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+	    ]]>
+	</select>
+	
+	<!--  查询分页总数 -->
+    <select id="queryPageCounts" resultType="java.lang.String" parameterType="java.util.HashMap">
+	    <![CDATA[
+		    select
+		    	count(0)
+		    from t_dtsm_user u
+	    	left join t_dtsm_user_dept ud on u.userid = ud.userid
+	    ]]>
+	    <where>
+	         <![CDATA[
+				and u.corpid = #{corpid ,jdbcType=VARCHAR }
+			]]>
+			<if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					and ud.deptid = #{deptid,jdbcType=VARCHAR}
+				]]>
+            </if>
+			<if test="username != '' and username != null" >
+                <![CDATA[
+					and u.username like CONCAT(CONCAT('%',#{username ,jdbcType=VARCHAR}),'%')
+				]]>
+            </if>
+        </where>
+	</select>
+
+
+	<!-- REPLACE：corpid和userid为唯一索引，有则更新，无则插入 -->
+	<insert id="replaceDingTalkUser" parameterType="com.centit.server.dingtalk.manager.po.UserSync">
+    	<![CDATA[
+			replace into t_dtsm_user
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="userid != '' and userid != null" >
+                <![CDATA[
+					userid,
+				]]>
+            </if>
+            <if test="usernumber != '' and usernumber != null" >
+                <![CDATA[
+					usernumber,
+				]]>
+            </if>
+            <if test="password != '' and password != null" >
+                <![CDATA[
+					password,
+				]]>
+            </if>
+            <if test="username != '' and username != null" >
+                <![CDATA[
+					username,
+				]]>
+            </if>
+            <if test="mobile != '' and mobile != null" >
+                <![CDATA[
+					mobile,
+				]]>
+            </if>
+            <if test="avatar != '' and avatar != null" >
+                <![CDATA[
+					avatar,
+				]]>
+            </if>
+            <if test="workplace != '' and workplace != null" >
+                <![CDATA[
+					workplace,
+				]]>
+            </if>
+            <if test="tel != '' and tel != null" >
+                <![CDATA[
+					tel,
+				]]>
+            </if>
+            <if test="remark != '' and remark != null" >
+                <![CDATA[
+					remark,
+				]]>
+            </if>
+            <if test="position != '' and position != null" >
+                <![CDATA[
+					position,
+				]]>
+            </if>
+            <if test="jobnumber != '' and jobnumber != null" >
+                <![CDATA[
+					jobnumber,
+				]]>
+            </if>
+            <if test="createuserid != '' and createuserid != null" >
+                <![CDATA[
+					createuserid,
+				]]>
+            </if>
+	        <![CDATA[
+				createtime,
+			]]>
+            <if test="updateuserid != '' and updateuserid != null" >
+                <![CDATA[
+					updateuserid,
+				]]>
+            </if>
+            <![CDATA[
+				updatetime,
+			]]>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="userid != '' and userid != null" >
+                <![CDATA[
+					#{userid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="usernumber != '' and usernumber != null" >
+                <![CDATA[
+					#{usernumber,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="password != '' and password != null" >
+                <![CDATA[
+					#{password,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="username != '' and username != null" >
+                <![CDATA[
+					#{username,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="mobile != '' and mobile != null" >
+                <![CDATA[
+					#{mobile,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="avatar != '' and avatar != null" >
+                <![CDATA[
+					#{avatar,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="workplace != '' and workplace != null" >
+                <![CDATA[
+					#{workplace,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="tel != '' and tel != null" >
+                <![CDATA[
+					#{tel,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="remark != '' and remark != null" >
+                <![CDATA[
+					#{remark,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="position != '' and position != null" >
+                <![CDATA[
+					#{position,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="jobnumber != '' and jobnumber != null" >
+                <![CDATA[
+					#{jobnumber,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="createuserid != '' and createuserid != null" >
+                <![CDATA[
+					#{createuserid,jdbcType=VARCHAR},
+				]]>
+            </if>
+	        <![CDATA[
+				NOW(),
+			]]>
+            <if test="updateuserid != '' and updateuserid != null" >
+                <![CDATA[
+					#{updateuserid,jdbcType=VARCHAR},
+				]]>
+            </if>
+	        <![CDATA[
+				NOW(),
+			]]>
+        </trim>
+    </insert>
+
+
+	<!-- 删除 -->
+    <delete id="deleteDingTalkUser"  parameterType="com.centit.server.dingtalk.manager.po.UserSync">
+         <![CDATA[
+         delete from t_dtsm_user
+         ]]>
+        <where>
+            <![CDATA[ 
+              and corpid = #{corpid ,jdbcType=VARCHAR }
+            ]]>
+            <if test="userid != '' and userid != null" >
+            	<![CDATA[
+                	and userid = #{userid,jdbcType=VARCHAR}
+                ]]>
+            </if>
+        </where>
+    </delete>
+
+	<!--  根据usernumber查询userid -->
+    <select id="queryUseridByUsernumber" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.UserSync">
+	    <![CDATA[
+	    	select u.userid as userid from t_dtsm_user u
+	    ]]>
+	    <where>
+			<![CDATA[
+				and u.corpid = #{corpid ,jdbcType=VARCHAR }
+				and u.usernumber = #{usernumber ,jdbcType=VARCHAR }
+			]]>
+		</where>
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+</mapper>

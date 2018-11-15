@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centit.server.dingtalk.manager.dao.AgentDao" >
+
+    <resultMap id="BaseResultMap" type="com.centit.server.dingtalk.manager.po.Agent" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+        <result column="agentid" property="agentid" jdbcType="VARCHAR" />
+        <result column="agentname" property="agentname" jdbcType="VARCHAR" />
+        <result column="appid" property="appid" jdbcType="VARCHAR" />
+        <result column="logourl" property="logourl" jdbcType="VARCHAR" />
+        <result column="adminlist" property="adminlist" jdbcType="VARCHAR" />
+        <result column="agenttype" property="agenttype" jdbcType="VARCHAR" />
+        <result column="enable" property="enable" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!--  查询列表 -->
+    <select id="queryList" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.Agent">
+	    <![CDATA[
+	    	select
+			    id as id,
+			    corpid as corpid,
+		        agentid as agentid,
+		        agentname as agentname,
+		        appid as appid,
+		        logourl as logourl,
+		        adminlist as adminlist,
+		        agenttype as agenttype,
+		        enable as enable,
+		        date_format(createtime,'%Y-%m-%d %T') as createtime,
+		        date_format(updatetime,'%Y-%m-%d %T') as updatetime
+	    	from T_DT_CORP_AGENT
+	    ]]>
+	    <where>
+	    	<if test="corpid != '' and corpid != null" >
+				<![CDATA[
+					corpid = #{corpid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by createtime
+		]]>
+	</select>
+	
+    <!--  查询详情 -->
+    <select id="queryOne" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.Agent">
+	    <![CDATA[
+	    	select
+			    id as id,
+			    corpid as corpid,
+		        agentid as agentid,
+		        agentname as agentname,
+		        appid as appid,
+		        logourl as logourl,
+		        adminlist as adminlist,
+		        agenttype as agenttype,
+		        enable as enable,
+		        date_format(createtime,'%Y-%m-%d %T') as createtime,
+		        date_format(updatetime,'%Y-%m-%d %T') as updatetime
+	    	from T_DT_CORP_AGENT
+	    ]]>
+	    <where>
+	    	<if test="corpid != '' and corpid != null" >
+				<![CDATA[
+					corpid = #{corpid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+		</where>
+	</select>
+    
+    
+    <!-- 新增 -->
+	<!-- Mybatis获取插入记录的自增长ID,其中keyProperty是Java对象的属性名，而不是表格的字段名.
+	Mybatis执行完插入语句后，自动将自增长值赋值给对象systemBean的属性id。因此，可通过systemBean对应的getter方法获取！ -->
+    <insert id="insertAgent" parameterType="com.centit.server.dingtalk.manager.po.Agent" useGeneratedKeys="true" keyProperty="id">
+    	<![CDATA[
+			insert into T_DT_CORP_AGENT
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="agentid != '' and agentid != null" >
+                <![CDATA[
+					agentid,
+				]]>
+            </if>
+            <if test="agentname != '' and agentname != null" >
+                <![CDATA[
+					agentname,
+				]]>
+            </if>
+            <if test="appid != '' and appid != null" >
+                <![CDATA[
+					appid,
+				]]>
+            </if>
+            <if test="logourl != '' and logourl != null" >
+                <![CDATA[
+					logourl,
+				]]>
+            </if>
+            <if test="adminlist != '' and adminlist != null" >
+                <![CDATA[
+					adminlist,
+				]]>
+            </if>
+            <if test="agenttype != '' and agenttype != null" >
+                <![CDATA[
+					agenttype,
+				]]>
+            </if>
+            <if test="enable != '' and enable != null" >
+                <![CDATA[
+					enable,
+				]]>
+            </if>
+            <![CDATA[
+				createtime,
+			]]>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="agentid != '' and agentid != null" >
+                <![CDATA[
+					#{agentid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="agentname != '' and agentname != null" >
+                <![CDATA[
+					#{agentname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="appid != '' and appid != null" >
+                <![CDATA[
+					#{appid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="logourl != '' and logourl != null" >
+                <![CDATA[
+					#{logourl,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="adminlist != '' and adminlist != null" >
+                <![CDATA[
+					#{adminlist,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="agenttype != '' and agenttype != null" >
+                <![CDATA[
+					#{agenttype,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="enable != '' and enable != null" >
+                <![CDATA[
+					#{enable,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <![CDATA[
+					NOW(),
+			]]>
+        </trim>
+    </insert>
+    
+    <!-- 修改企业授权信息 -->
+    <update id="updateAgent" parameterType="com.centit.server.dingtalk.manager.po.Agent" >
+		<![CDATA[
+        	update T_DT_CORP_AGENT
+        ]]>
+        <set >
+        	<if test="agentid != '' and agentid != null" >
+            	<![CDATA[
+                	agentid = #{agentid,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="agentname != '' and agentname != null" >
+            	<![CDATA[
+                	agentname = #{agentname,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="appid != '' and appid != null" >
+            	<![CDATA[
+                	appid = #{appid,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="logourl != '' and logourl != null" >
+            	<![CDATA[
+                	logourl = #{logourl,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="adminlist != '' and adminlist != null" >
+            	<![CDATA[
+                	adminlist = #{adminlist,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="agenttype != '' and agenttype != null" >
+            	<![CDATA[
+                	agenttype = #{agenttype,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="enable != '' and enable != null" >
+            	<![CDATA[
+                	enable = #{enable,jdbcType=VARCHAR},
+                ]]>
+            </if>
+           	<![CDATA[
+               	updatetime = NOW()
+            ]]>
+        </set>
+        <where>
+			<![CDATA[
+				and agentid = #{agentid ,jdbcType=VARCHAR }
+				and corpid = #{corpid ,jdbcType=VARCHAR }
+			]]>
+		</where>
+    </update>
+    
+    <!-- 删除 -->
+    <delete id="deleteAgent"  parameterType="com.centit.server.dingtalk.manager.po.Agent">
+         <![CDATA[
+         delete from T_DT_CORP_AGENT 
+         ]]>
+        <where>
+            <![CDATA[ 
+              and corpid = #{corpid ,jdbcType=VARCHAR }
+            ]]>
+            <if test="agentid != '' and agentid != null" >
+				<![CDATA[
+					agentid = #{agentid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+        </where>
+    </delete>
+    
+    <!-- REPLACE：corpid和agentid为唯一索引，有则更新，无则插入 -->
+    <insert id="replaceAgent" parameterType="com.centit.server.dingtalk.manager.po.Agent">
+    	<![CDATA[
+			replace into T_DT_CORP_AGENT
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="agentid != '' and agentid != null" >
+                <![CDATA[
+					agentid,
+				]]>
+            </if>
+            <if test="agentname != '' and agentname != null" >
+                <![CDATA[
+					agentname,
+				]]>
+            </if>
+            <if test="appid != '' and appid != null" >
+                <![CDATA[
+					appid,
+				]]>
+            </if>
+            <if test="logourl != '' and logourl != null" >
+                <![CDATA[
+					logourl,
+				]]>
+            </if>
+            <if test="adminlist != '' and adminlist != null" >
+                <![CDATA[
+					adminlist,
+				]]>
+            </if>
+            <if test="agenttype != '' and agenttype != null" >
+                <![CDATA[
+					agenttype,
+				]]>
+            </if>
+            <if test="enable != '' and enable != null" >
+                <![CDATA[
+					enable,
+				]]>
+            </if>
+            <![CDATA[
+				createtime,
+			]]>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="agentid != '' and agentid != null" >
+                <![CDATA[
+					#{agentid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="agentname != '' and agentname != null" >
+                <![CDATA[
+					#{agentname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="appid != '' and appid != null" >
+                <![CDATA[
+					#{appid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="logourl != '' and logourl != null" >
+                <![CDATA[
+					#{logourl,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="adminlist != '' and adminlist != null" >
+                <![CDATA[
+					#{adminlist,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="agenttype != '' and agenttype != null" >
+                <![CDATA[
+					#{agenttype,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="enable != '' and enable != null" >
+                <![CDATA[
+					#{enable,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <![CDATA[
+					NOW(),
+			]]>
+        </trim>
+    </insert>
+
+</mapper>

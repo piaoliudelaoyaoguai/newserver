@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centit.server.webmgr.device.dao.M2NodeDao" >
+
+    <resultMap id="BaseResultMap" type="com.centit.server.webmgr.device.po.M2Node" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+        <result column="deptid" property="deptid" jdbcType="VARCHAR" />
+        <result column="deptname" property="deptname" jdbcType="VARCHAR" />
+        <result column="parentid" property="parentid" jdbcType="VARCHAR" />
+        <result column="createuserid" property="createuserid" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+        <result column="updateuserid" property="updateuserid" jdbcType="VARCHAR" />
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+        <result column="sn" property="sn" jdbcType="VARCHAR" />
+        <result column="mark" property="mark" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--  查询列表（分页） -->
+    <select id="queryM2NodeListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+	    <![CDATA[
+	    	select
+			    t.id as id,
+			    t.corpid as corpid,
+			    t.deptid as deptid,
+		        t.deptname as deptname,
+		        t.parentid as parentid,
+		        t.createuserid as createuserid,
+		        date_format(t.createtime,'%Y-%m-%d %T') as createtime,
+		        t.updateuserid as updateuserid,
+		        date_format(t.updatetime,'%Y-%m-%d %T') as updatetime,
+		        t.sn as sn,
+		        t.mark as mark
+	    	from t_dt_node t
+	    ]]>
+	    <where>
+			<![CDATA[
+				and t.corpid = #{corpid ,jdbcType=VARCHAR }
+			]]>
+			<if test="deptname != '' and deptname != null" >
+                <![CDATA[
+					and t.deptname like CONCAT(CONCAT('%',#{deptname ,jdbcType=VARCHAR}),'%')
+				]]>
+            </if>
+		</where>
+		<![CDATA[
+	         order by t.parentid, t.createtime desc limit #{pageNum, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+	    ]]>
+	</select>
+
+    <!--  查询列表（分页）总数 -->
+    <select id="queryM2NodeListPageCount" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+	    <![CDATA[
+	    	select count(0) from t_dt_node t
+	    ]]>
+	    <where>
+			<![CDATA[
+				and t.corpid = #{corpid ,jdbcType=VARCHAR }
+			]]>
+			<if test="deptname != '' and deptname != null" >
+                <![CDATA[
+					and t.deptname like CONCAT(CONCAT('%',#{deptname ,jdbcType=VARCHAR}),'%')
+				]]>
+            </if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<!-- Mybatis获取插入记录的自增长ID,其中keyProperty是Java对象的属性名，而不是表格的字段名.
+	Mybatis执行完插入语句后，自动将自增长值赋值给对象systemBean的属性id。因此，可通过systemBean对应的getter方法获取！ -->
+	<insert id="addM2Node" parameterType="com.centit.server.webmgr.device.po.M2Node" useGeneratedKeys="true" keyProperty="id">
+    	<![CDATA[
+			insert into t_dt_node
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					deptid,
+				]]>
+            </if>
+            <if test="deptname != '' and deptname != null" >
+                <![CDATA[
+					deptname,
+				]]>
+            </if>
+            <if test="parentid != '' and parentid != null" >
+                <![CDATA[
+					parentid,
+				]]>
+            </if>
+            <if test="createuserid != '' and createuserid != null" >
+                <![CDATA[
+					createuserid,
+				]]>
+            </if>
+            <![CDATA[
+				createtime,
+			]]>
+            <if test="updateuserid != '' and updateuserid != null" >
+                <![CDATA[
+					updateuserid,
+				]]>
+            </if>
+            <![CDATA[
+				updatetime,
+			]]>
+            <if test="sn != '' and sn != null" >
+                <![CDATA[
+					sn,
+				]]>
+            </if>
+            <if test="mark != '' and mark != null" >
+                <![CDATA[
+					mark,
+				]]>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					#{deptid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deptname != '' and deptname != null" >
+                <![CDATA[
+					#{deptname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="parentid != '' and parentid != null" >
+                <![CDATA[
+					#{parentid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="createuserid != '' and createuserid != null" >
+                <![CDATA[
+					#{createuserid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <![CDATA[
+				NOW(),
+			]]>
+            <if test="updateuserid != '' and updateuserid != null" >
+                <![CDATA[
+					#{updateuserid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <![CDATA[
+				NOW(),
+			]]>
+            <if test="sn != '' and sn != null" >
+                <![CDATA[
+					#{sn,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="mark != '' and mark != null" >
+                <![CDATA[
+					#{mark,jdbcType=VARCHAR},
+				]]>
+            </if>
+        </trim>
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="updateM2Node" parameterType="com.centit.server.webmgr.device.po.M2Node" >
+		<![CDATA[
+        	update t_dt_node
+        ]]>
+        <set >
+            <if test="deptname != '' and deptname != null" >
+            	<![CDATA[
+                	deptname = #{deptname,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="updateuserid != '' and updateuserid != null" >
+            	<![CDATA[
+                	updateuserid = #{updateuserid,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <![CDATA[
+            	updatetime = NOW(),
+            ]]>
+            <if test="sn != '' and sn != null" >
+            	<![CDATA[
+                	sn = #{sn ,jdbcType=VARCHAR },
+                ]]>
+            </if>
+            <if test="mark != '' and mark != null" >
+            	<![CDATA[
+                	mark = #{mark,jdbcType=VARCHAR},
+                ]]>
+            </if>
+        </set>
+        <where>
+			<![CDATA[
+				and id = #{id ,jdbcType=VARCHAR } 
+				and corpid = #{corpid ,jdbcType=VARCHAR } 
+			]]>
+			<if test="deptid != '' and deptid != null" >
+            	<![CDATA[
+                	and deptid = #{deptid ,jdbcType=VARCHAR } 
+                ]]>
+            </if>
+		</where>
+    </update>
+    
+    <!-- 删除 -->
+    <delete id="deleteM2Node"  parameterType="com.centit.server.webmgr.device.po.M2Node">
+         <![CDATA[
+         	delete from t_dt_node
+         ]]>
+        <where>
+            <![CDATA[ 
+              and corpid = #{corpid,jdbcType=VARCHAR}
+              and id = #{id,jdbcType=VARCHAR}
+            ]]>
+            <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					and deptid = #{deptid,jdbcType=VARCHAR}
+				]]>
+            </if>
+        </where>
+    </delete>
+    
+
+    
+
+</mapper>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centit.server.dingtalk.manager.dao.DingTalkSuiteDao" >
+
+    <resultMap id="BaseResultMap" type="com.centit.server.dingtalk.manager.po.DingTalkSuite" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="suiteid" property="suiteid" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="token" property="token" jdbcType="VARCHAR" />
+        <result column="encoding_aes_key" property="encoding_aes_key" jdbcType="VARCHAR" />
+        <result column="suite_key" property="suite_key" jdbcType="VARCHAR" />
+        <result column="suite_secret" property="suite_secret" jdbcType="VARCHAR" />
+        <result column="suit_ticket" property="suit_ticket" jdbcType="VARCHAR" />
+        <result column="suite_access_token" property="suite_access_token" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!--  查询详情 -->
+    <select id="queryList" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.DingTalkSuite">
+	    <![CDATA[
+	    	select
+			    id as id,
+			    suiteid as suiteid,
+		        name as name,
+		        token as token,
+		        encoding_aes_key as encoding_aes_key,
+		        suite_key as suite_key,
+		        suite_secret as suite_secret,
+		        suit_ticket as suit_ticket,
+		        suite_access_token as suite_access_token,
+		        date_format(createtime,'%Y-%m-%d %T') as createtime,
+		        date_format(updatetime,'%Y-%m-%d %T') as updatetime
+	    	from T_DT_SUITE
+	    ]]>
+	    <where>
+	    	<if test="id != '' and id != null" >
+				<![CDATA[
+					id = #{id ,jdbcType=VARCHAR }
+				]]>
+			</if>
+	    	<if test="suiteid != '' and suiteid != null" >
+				<![CDATA[
+					suiteid = #{suiteid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+		</where>
+	</select>
+	
+    <!--  查询详情 -->
+    <select id="queryOne" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.DingTalkSuite">
+	    <![CDATA[
+	    	select
+			    id as id,
+			    suiteid as suiteid,
+		        name as name,
+		        token as token,
+		        encoding_aes_key as encoding_aes_key,
+		        suite_key as suite_key,
+		        suite_secret as suite_secret,
+		        suit_ticket as suit_ticket,
+		        suite_access_token as suite_access_token,
+		        date_format(createtime,'%Y-%m-%d %T') as createtime,
+		        date_format(updatetime,'%Y-%m-%d %T') as updatetime
+	    	from T_DT_SUITE
+	    ]]>
+	    <where>
+	    	<if test="id != '' and id != null" >
+				<![CDATA[
+					id = #{id ,jdbcType=VARCHAR }
+				]]>
+			</if>
+	    	<if test="suiteid != '' and suiteid != null" >
+				<![CDATA[
+					suiteid = #{suiteid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+		</where>
+	</select>
+	
+	<update id="update" parameterType="com.centit.server.dingtalk.manager.po.DingTalkSuite" >
+		<![CDATA[
+        	update T_DT_SUITE
+        ]]>
+        <set >
+            <if test="name != '' and name != null" >
+            	<![CDATA[
+                	name = #{name,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="token != '' and token != null" >
+            	<![CDATA[
+                	token = #{token,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="encoding_aes_key != '' and encoding_aes_key != null" >
+            	<![CDATA[
+                	encoding_aes_key = #{encoding_aes_key,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="suite_key != '' and suite_key != null" >
+            	<![CDATA[
+                	suite_key = #{suite_key,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="suite_secret != '' and suite_secret != null" >
+            	<![CDATA[
+                	suite_secret = #{suite_secret,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="suit_ticket != '' and suit_ticket != null" >
+            	<![CDATA[
+                	suit_ticket = #{suit_ticket,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="suite_access_token != '' and suite_access_token != null" >
+            	<![CDATA[
+                	suite_access_token = #{suite_access_token,jdbcType=VARCHAR},
+                ]]>
+            </if>
+           	<![CDATA[
+               	updatetime = now(),
+            ]]>
+        </set>
+        <where>
+			<if test="id != '' and id != null">
+				<![CDATA[
+					and id = #{id ,jdbcType=VARCHAR }
+				]]>
+			</if>
+			<if test="suiteid != '' and suiteid != null">
+				<![CDATA[
+					and suiteid = #{suiteid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+		</where>
+    </update>
+    
+
+</mapper>

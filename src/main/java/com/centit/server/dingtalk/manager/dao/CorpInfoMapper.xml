@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centit.server.dingtalk.manager.dao.CorpInfoDao" >
+
+    <resultMap id="BaseResultMap" type="com.centit.server.dingtalk.manager.po.CorpInfo" >
+        <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+        <result column="corpname" property="corpname" jdbcType="VARCHAR" />
+        <result column="suiteid" property="suiteid" jdbcType="VARCHAR" />
+        <result column="permanent_code" property="permanent_code" jdbcType="VARCHAR" />
+        <result column="access_token" property="access_token" jdbcType="VARCHAR" />
+        <result column="jsapi_ticket" property="jsapi_ticket" jdbcType="VARCHAR" />
+        <result column="corplogourl" property="corplogourl" jdbcType="VARCHAR" />
+        <result column="industry" property="industry" jdbcType="VARCHAR" />
+        <result column="invitecode" property="invitecode" jdbcType="VARCHAR" />
+        <result column="licensecode" property="licensecode" jdbcType="VARCHAR" />
+        <result column="authchannel" property="authchannel" jdbcType="VARCHAR" />
+        <result column="authchanneltype" property="authchanneltype" jdbcType="VARCHAR" />
+        <result column="isauthenticated" property="isauthenticated" jdbcType="VARCHAR" />
+        <result column="authlevel" property="authlevel" jdbcType="VARCHAR" />
+        <result column="inviteurl" property="inviteurl" jdbcType="VARCHAR" />
+        <result column="authuserinfo" property="authuserinfo" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+        <result column="isenable" property="isenable" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!--  查询列表 -->
+    <select id="queryList" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.CorpInfo">
+	    <![CDATA[
+	    	select
+			    corpid as corpid,
+			    corpname as corpname,
+		        suiteid as suiteid,
+		        permanent_code as permanent_code,
+		        access_token as access_token,
+		        jsapi_ticket as jsapi_ticket,
+		        corplogourl as corplogourl,
+		        industry as industry,
+		        invitecode as invitecode,
+		        licensecode as licensecode,
+		        authchannel as authchannel,
+		        authchanneltype as authchanneltype,
+		        isauthenticated as isauthenticated,
+		        authlevel as authlevel,
+		        inviteurl as inviteurl,
+		        authuserinfo as authuserinfo,
+		        date_format(createtime,'%Y-%m-%d %T') as createtime,
+		        date_format(updatetime,'%Y-%m-%d %T') as updatetime,
+		        isenable as isenable
+	    	from T_DT_CORPINFO
+	    ]]>
+	    <where>
+	    	<if test="suiteid != '' and suiteid != null" >
+				<![CDATA[
+					suiteid = #{suiteid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+		</where>
+	</select>
+	
+    <!--  查询详情 -->
+    <select id="queryOne" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.CorpInfo">
+	    <![CDATA[
+	    	select
+				corpid as corpid,
+				corpname as corpname,
+		        suiteid as suiteid,
+		        permanent_code as permanent_code,
+		        access_token as access_token,
+		        jsapi_ticket as jsapi_ticket,
+		        corplogourl as corplogourl,
+		        industry as industry,
+		        invitecode as invitecode,
+		        licensecode as licensecode,
+		        authchannel as authchannel,
+		        authchanneltype as authchanneltype,
+		        isauthenticated as isauthenticated,
+		        authlevel as authlevel,
+		        inviteurl as inviteurl,
+		        authuserinfo as authuserinfo,
+		        date_format(createtime,'%Y-%m-%d %T') as createtime,
+		        date_format(updatetime,'%Y-%m-%d %T') as updatetime,
+		        isenable as isenable
+	    	from T_DT_CORPINFO
+	    ]]>
+	    <where>
+	    	<if test="corpid != '' and corpid != null" >
+				<![CDATA[
+					corpid = #{corpid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+		</where>
+	</select>
+    
+    
+    <!-- 插入企业授权信息 -->
+    <insert id="insertCorpInfo" parameterType="com.centit.server.dingtalk.manager.po.CorpInfo" >
+    	<![CDATA[
+			insert into T_DT_CORPINFO
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="corpname != '' and corpname != null" >
+                <![CDATA[
+					corpname,
+				]]>
+            </if>
+            <if test="suiteid != '' and suiteid != null" >
+                <![CDATA[
+					suiteid,
+				]]>
+            </if>
+            <if test="permanent_code != '' and permanent_code != null" >
+                <![CDATA[
+					permanent_code,
+				]]>
+            </if>
+            <if test="access_token != '' and access_token != null" >
+                <![CDATA[
+					access_token,
+				]]>
+            </if>
+            <if test="jsapi_ticket != '' and jsapi_ticket != null" >
+                <![CDATA[
+					jsapi_ticket,
+				]]>
+            </if>
+            <if test="corplogourl != '' and corplogourl != null" >
+                <![CDATA[
+					corplogourl,
+				]]>
+            </if>
+            <if test="industry != '' and industry != null" >
+                <![CDATA[
+					industry,
+				]]>
+            </if>
+            <if test="invitecode != '' and invitecode != null" >
+                <![CDATA[
+					invitecode,
+				]]>
+            </if>
+            <if test="licensecode != '' and licensecode != null" >
+                <![CDATA[
+					licensecode,
+				]]>
+            </if>
+            <if test="authchannel != '' and authchannel != null" >
+                <![CDATA[
+					authchannel,
+				]]>
+            </if>
+            <if test="authchanneltype != '' and authchanneltype != null" >
+                <![CDATA[
+					authchanneltype,
+				]]>
+            </if>
+            <if test="isauthenticated != '' and isauthenticated != null" >
+                <![CDATA[
+					isauthenticated,
+				]]>
+            </if>
+            <if test="authlevel != '' and authlevel != null" >
+                <![CDATA[
+					authlevel,
+				]]>
+            </if>
+            <if test="inviteurl != '' and inviteurl != null" >
+                <![CDATA[
+					inviteurl,
+				]]>
+            </if>
+            <if test="authuserinfo != '' and authuserinfo != null" >
+                <![CDATA[
+					authuserinfo,
+				]]>
+            </if>
+            <if test="isenable != '' and isenable != null" >
+                <![CDATA[
+					isenable,
+				]]>
+            </if>
+            <![CDATA[
+					createtime
+			]]>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpname != '' and corpname != null" >
+                <![CDATA[
+					#{corpname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="suiteid != '' and suiteid != null" >
+                <![CDATA[
+					#{suiteid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="permanent_code != '' and permanent_code != null" >
+                <![CDATA[
+					#{permanent_code,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="access_token != '' and access_token != null" >
+                <![CDATA[
+					#{access_token,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="jsapi_ticket != '' and jsapi_ticket != null" >
+                <![CDATA[
+					#{jsapi_ticket,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corplogourl != '' and corplogourl != null" >
+                <![CDATA[
+					#{corplogourl,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="industry != '' and industry != null" >
+                <![CDATA[
+					#{industry,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="invitecode != '' and invitecode != null" >
+                <![CDATA[
+					#{invitecode,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="licensecode != '' and licensecode != null" >
+                <![CDATA[
+					#{licensecode,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="authchannel != '' and authchannel != null" >
+                <![CDATA[
+					#{authchannel,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="authchanneltype != '' and authchanneltype != null" >
+                <![CDATA[
+					#{authchanneltype,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="isauthenticated != '' and isauthenticated != null" >
+                <![CDATA[
+					#{isauthenticated,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="authlevel != '' and authlevel != null" >
+                <![CDATA[
+					#{authlevel,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="inviteurl != '' and inviteurl != null" >
+                <![CDATA[
+					#{inviteurl,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="authuserinfo != '' and authuserinfo != null" >
+                <![CDATA[
+					#{authuserinfo,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="isenable != '' and isenable != null" >
+                <![CDATA[
+					#{isenable,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <![CDATA[
+					NOW()
+			]]>
+        </trim>
+    </insert>
+    
+    <!-- 修改企业授权信息 -->
+    <update id="updateCorpInfo" parameterType="com.centit.server.dingtalk.manager.po.CorpInfo" >
+		<![CDATA[
+        	update T_DT_CORPINFO
+        ]]>
+        <set >
+        	<if test="corpname != '' and corpname != null" >
+            	<![CDATA[
+                	corpname = #{corpname,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="suiteid != '' and suiteid != null" >
+            	<![CDATA[
+                	suiteid = #{suiteid,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="permanent_code != '' and permanent_code != null" >
+            	<![CDATA[
+                	permanent_code = #{permanent_code,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="access_token != '' and access_token != null" >
+            	<![CDATA[
+                	access_token = #{access_token,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="jsapi_ticket != '' and jsapi_ticket != null" >
+            	<![CDATA[
+                	jsapi_ticket = #{jsapi_ticket,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="corplogourl != '' and corplogourl != null" >
+            	<![CDATA[
+                	corplogourl = #{corplogourl,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="industry != '' and industry != null" >
+            	<![CDATA[
+                	industry = #{industry,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="invitecode != '' and invitecode != null" >
+            	<![CDATA[
+                	invitecode = #{invitecode,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="licensecode != '' and licensecode != null" >
+            	<![CDATA[
+                	licensecode = #{licensecode,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="authchannel != '' and authchannel != null" >
+            	<![CDATA[
+                	authchannel = #{authchannel,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="authchanneltype != '' and authchanneltype != null" >
+            	<![CDATA[
+                	authchanneltype = #{authchanneltype,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="isauthenticated != '' and isauthenticated != null" >
+            	<![CDATA[
+                	isauthenticated = #{isauthenticated,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="authlevel != '' and authlevel != null" >
+            	<![CDATA[
+                	authlevel = #{authlevel,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="inviteurl != '' and inviteurl != null" >
+            	<![CDATA[
+                	inviteurl = #{inviteurl,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="authuserinfo != '' and authuserinfo != null" >
+            	<![CDATA[
+                	authuserinfo = #{authuserinfo,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="isenable != '' and isenable != null" >
+            	<![CDATA[
+                	isenable = #{isenable,jdbcType=VARCHAR},
+                ]]>
+            </if>
+           	<![CDATA[
+               	updatetime = NOW()
+            ]]>
+        </set>
+        <where>
+			<![CDATA[
+				and corpid = #{corpid ,jdbcType=VARCHAR }
+			]]>
+			<if test="suiteid != '' and suiteid != null" >
+            	<![CDATA[
+                	and suiteid = #{suiteid,jdbcType=VARCHAR}
+                ]]>
+            </if>
+		</where>
+    </update>
+    
+    <!-- 删除 -->
+    <delete id="deleteCorpInfo"  parameterType="com.centit.server.dingtalk.manager.po.CorpInfo">
+         <![CDATA[
+         delete from T_DT_CORPINFO 
+         ]]>
+        <where>
+            <![CDATA[ 
+              and corpid = #{corpid ,jdbcType=VARCHAR }
+            ]]>
+            <if test="suiteid != '' and suiteid != null" >
+            	<![CDATA[
+                	and suiteid = #{suiteid,jdbcType=VARCHAR}
+                ]]>
+            </if>
+        </where>
+    </delete>
+    
+    <!-- REPLACE：corpid为唯一索引，有则更新，无则插入 -->
+    <insert id="replaceCorpInfo" parameterType="com.centit.server.dingtalk.manager.po.CorpInfo" >
+    	<![CDATA[
+			replace into T_DT_CORPINFO
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="corpname != '' and corpname != null" >
+                <![CDATA[
+					corpname,
+				]]>
+            </if>
+            <if test="suiteid != '' and suiteid != null" >
+                <![CDATA[
+					suiteid,
+				]]>
+            </if>
+            <if test="permanent_code != '' and permanent_code != null" >
+                <![CDATA[
+					permanent_code,
+				]]>
+            </if>
+            <if test="access_token != '' and access_token != null" >
+                <![CDATA[
+					access_token,
+				]]>
+            </if>
+            <if test="jsapi_ticket != '' and jsapi_ticket != null" >
+                <![CDATA[
+					jsapi_ticket,
+				]]>
+            </if>
+            <if test="corplogourl != '' and corplogourl != null" >
+                <![CDATA[
+					corplogourl,
+				]]>
+            </if>
+            <if test="industry != '' and industry != null" >
+                <![CDATA[
+					industry,
+				]]>
+            </if>
+            <if test="invitecode != '' and invitecode != null" >
+                <![CDATA[
+					invitecode,
+				]]>
+            </if>
+            <if test="licensecode != '' and licensecode != null" >
+                <![CDATA[
+					licensecode,
+				]]>
+            </if>
+            <if test="authchannel != '' and authchannel != null" >
+                <![CDATA[
+					authchannel,
+				]]>
+            </if>
+            <if test="authchanneltype != '' and authchanneltype != null" >
+                <![CDATA[
+					authchanneltype,
+				]]>
+            </if>
+            <if test="isauthenticated != '' and isauthenticated != null" >
+                <![CDATA[
+					isauthenticated,
+				]]>
+            </if>
+            <if test="authlevel != '' and authlevel != null" >
+                <![CDATA[
+					authlevel,
+				]]>
+            </if>
+            <if test="inviteurl != '' and inviteurl != null" >
+                <![CDATA[
+					inviteurl,
+				]]>
+            </if>
+            <if test="authuserinfo != '' and authuserinfo != null" >
+                <![CDATA[
+					authuserinfo,
+				]]>
+            </if>
+            <if test="isenable != '' and isenable != null" >
+                <![CDATA[
+					isenable,
+				]]>
+            </if>
+            <![CDATA[
+					createtime,
+			]]>
+            <![CDATA[
+					updatetime,
+			]]>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpname != '' and corpname != null" >
+                <![CDATA[
+					#{corpname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="suiteid != '' and suiteid != null" >
+                <![CDATA[
+					#{suiteid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="permanent_code != '' and permanent_code != null" >
+                <![CDATA[
+					#{permanent_code,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="access_token != '' and access_token != null" >
+                <![CDATA[
+					#{access_token,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="jsapi_ticket != '' and jsapi_ticket != null" >
+                <![CDATA[
+					#{jsapi_ticket,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corplogourl != '' and corplogourl != null" >
+                <![CDATA[
+					#{corplogourl,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="industry != '' and industry != null" >
+                <![CDATA[
+					#{industry,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="invitecode != '' and invitecode != null" >
+                <![CDATA[
+					#{invitecode,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="licensecode != '' and licensecode != null" >
+                <![CDATA[
+					#{licensecode,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="authchannel != '' and authchannel != null" >
+                <![CDATA[
+					#{authchannel,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="authchanneltype != '' and authchanneltype != null" >
+                <![CDATA[
+					#{authchanneltype,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="isauthenticated != '' and isauthenticated != null" >
+                <![CDATA[
+					#{isauthenticated,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="authlevel != '' and authlevel != null" >
+                <![CDATA[
+					#{authlevel,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="inviteurl != '' and inviteurl != null" >
+                <![CDATA[
+					#{inviteurl,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="authuserinfo != '' and authuserinfo != null" >
+                <![CDATA[
+					#{authuserinfo,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="isenable != '' and isenable != null" >
+                <![CDATA[
+					#{isenable,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <![CDATA[
+					NOW(),
+			]]>
+            <![CDATA[
+					NOW(),
+			]]>
+        </trim>
+    </insert>
+
+</mapper>

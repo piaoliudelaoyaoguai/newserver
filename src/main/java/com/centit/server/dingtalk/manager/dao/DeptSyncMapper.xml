@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centit.server.dingtalk.manager.dao.DeptSyncDao" >
+
+    <resultMap id="BaseResultMap" type="com.centit.server.dingtalk.manager.po.DeptSync" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+        <result column="deptid" property="deptid" jdbcType="VARCHAR" />
+        <result column="deptnumber" property="deptnumber" jdbcType="VARCHAR" />
+        <result column="deptname" property="deptname" jdbcType="VARCHAR" />
+        <result column="parentid" property="parentid" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="VARCHAR" />
+        <result column="createuserid" property="createuserid" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+        <result column="updateuserid" property="updateuserid" jdbcType="VARCHAR" />
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    
+    <!--  查询列表 -->
+    <select id="queryList" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.DeptSync">
+	    <![CDATA[
+	    	select
+			    id as id,
+			    corpid as corpid,
+			    deptid as deptid,
+			    deptnumber as deptnumber,
+		        deptname as deptname,
+		        parentid as parentid,
+		        sort as sort,
+		        createuserid as createuserid,
+		        updateuserid as updateuserid,
+		        date_format(createtime,'%Y-%m-%d %T') as createtime,
+		        date_format(updatetime,'%Y-%m-%d %T') as updatetime
+	    	from t_dtsm_dept
+	    ]]>
+	    <where>
+	    	<if test="corpid != '' and corpid != null" >
+				<![CDATA[
+					and corpid = #{corpid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+		</where>
+	</select>
+
+    <!--  查询子部门列表 -->
+    <select id="queryChildList" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.DeptSync">
+	    <![CDATA[
+	    	select
+			    id as id,
+			    deptid as deptid,
+			    deptnumber as deptnumber,
+		        deptname as deptname,
+		        parentid as parentid,
+		        sort as sort
+	    	from t_dtsm_dept
+	    ]]>
+	    <where>
+	    	<if test="corpid != '' and corpid != null" >
+				<![CDATA[
+					and corpid = #{corpid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+	    	<if test="parentid != '' and parentid != null" >
+				<![CDATA[
+					and parentid = #{parentid ,jdbcType=VARCHAR }
+				]]>
+			</if>
+		</where>
+	</select>
+
+	<!-- 插入 -->
+	<insert id="insertDingTalkDept" parameterType="com.centit.server.dingtalk.manager.po.DeptSync" useGeneratedKeys="true" keyProperty="id">
+    	<![CDATA[
+			insert into t_dtsm_dept
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					deptid,
+				]]>
+            </if>
+            <if test="deptnumber != '' and deptnumber != null" >
+                <![CDATA[
+					deptnumber,
+				]]>
+            </if>
+            <if test="deptname != '' and deptname != null" >
+                <![CDATA[
+					deptname,
+				]]>
+            </if>
+            <if test="parentid != '' and parentid != null" >
+                <![CDATA[
+					parentid,
+				]]>
+            </if>
+            <if test="sort != '' and sort != null" >
+                <![CDATA[
+					sort,
+				]]>
+            </if>
+            <if test="createuserid != '' and createuserid != null" >
+                <![CDATA[
+					createuserid,
+				]]>
+            </if>
+	        <![CDATA[
+				createtime,
+			]]>
+            <if test="updateuserid != '' and updateuserid != null" >
+                <![CDATA[
+					updateuserid,
+				]]>
+            </if>
+            <![CDATA[
+				updatetime,
+			]]>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					#{deptid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deptnumber != '' and deptnumber != null" >
+                <![CDATA[
+					#{deptnumber,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deptname != '' and deptname != null" >
+                <![CDATA[
+					#{deptname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="parentid != '' and parentid != null" >
+                <![CDATA[
+					#{parentid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="sort != '' and sort != null" >
+                <![CDATA[
+					#{sort,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="createuserid != '' and createuserid != null" >
+                <![CDATA[
+					#{createuserid,jdbcType=VARCHAR},
+				]]>
+            </if>
+	        <![CDATA[
+				NOW(),
+			]]>
+            <if test="updateuserid != '' and updateuserid != null" >
+                <![CDATA[
+					#{updateuserid,jdbcType=VARCHAR},
+				]]>
+            </if>
+	        <![CDATA[
+				NOW(),
+			]]>
+        </trim>
+    </insert>
+    
+    <!-- 修改 -->
+    <update id="updateDingTalkDept" parameterType="com.centit.server.dingtalk.manager.po.DeptSync" >
+		<![CDATA[
+        	update t_dtsm_dept
+        ]]>
+        <set >
+        	<if test="deptname != '' and deptname != null" >
+            	<![CDATA[
+                	deptname = #{deptname,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="parentid != '' and parentid != null" >
+            	<![CDATA[
+                	parentid = #{parentid,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="sort != '' and sort != null" >
+            	<![CDATA[
+                	sort = #{sort,jdbcType=VARCHAR},
+                ]]>
+            </if>
+           	<![CDATA[
+               	updatetime = NOW()
+            ]]>
+        </set>
+        <where>
+			<![CDATA[
+				and corpid = #{corpid ,jdbcType=VARCHAR }
+				and deptid = #{deptid,jdbcType=VARCHAR}
+			]]>
+		</where>
+    </update>
+
+    <!-- 修改：数梦平台 -->
+    <update id="updateDingTalkDeptDtDream" parameterType="com.centit.server.dingtalk.manager.po.DeptSync" >
+		<![CDATA[
+        	update t_dtsm_dept
+        ]]>
+        <set >
+        	<if test="deptid != '' and deptid != null" >
+            	<![CDATA[
+                	deptid = #{deptid,jdbcType=VARCHAR},
+                ]]>
+            </if>
+        	<if test="deptname != '' and deptname != null" >
+            	<![CDATA[
+                	deptname = #{deptname,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="parentid != '' and parentid != null" >
+            	<![CDATA[
+                	parentid = #{parentid,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="sort != '' and sort != null" >
+            	<![CDATA[
+                	sort = #{sort,jdbcType=VARCHAR},
+                ]]>
+            </if>
+           	<![CDATA[
+               	updatetime = NOW()
+            ]]>
+        </set>
+        <where>
+			<![CDATA[
+				and corpid = #{corpid ,jdbcType=VARCHAR }
+				and deptnumber = #{deptnumber,jdbcType=VARCHAR}
+			]]>
+		</where>
+    </update>
+
+	<!-- REPLACE：corpid和deptid为唯一索引，有则更新，无则插入 -->
+	<insert id="replaceDingTalkDept" parameterType="com.centit.server.dingtalk.manager.po.DeptSync">
+    	<![CDATA[
+			replace into t_dtsm_dept
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					deptid,
+				]]>
+            </if>
+            <if test="deptname != '' and deptname != null" >
+                <![CDATA[
+					deptname,
+				]]>
+            </if>
+            <if test="parentid != '' and parentid != null" >
+                <![CDATA[
+					parentid,
+				]]>
+            </if>
+            <if test="sort != '' and sort != null" >
+                <![CDATA[
+					sort,
+				]]>
+            </if>
+            <if test="createuserid != '' and createuserid != null" >
+                <![CDATA[
+					createuserid,
+				]]>
+            </if>
+	        <![CDATA[
+				createtime,
+			]]>
+            <if test="updateuserid != '' and updateuserid != null" >
+                <![CDATA[
+					updateuserid,
+				]]>
+            </if>
+            <![CDATA[
+				updatetime,
+			]]>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					#{deptid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deptname != '' and deptname != null" >
+                <![CDATA[
+					#{deptname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="parentid != '' and parentid != null" >
+                <![CDATA[
+					#{parentid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="sort != '' and sort != null" >
+                <![CDATA[
+					#{sort,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="createuserid != '' and createuserid != null" >
+                <![CDATA[
+					#{createuserid,jdbcType=VARCHAR},
+				]]>
+            </if>
+	        <![CDATA[
+				NOW(),
+			]]>
+            <if test="updateuserid != '' and updateuserid != null" >
+                <![CDATA[
+					#{updateuserid,jdbcType=VARCHAR},
+				]]>
+            </if>
+	        <![CDATA[
+				NOW(),
+			]]>
+        </trim>
+    </insert>
+
+
+	<!-- 删除 -->
+    <delete id="deleteDingTalkDept"  parameterType="com.centit.server.dingtalk.manager.po.DeptSync">
+         <![CDATA[
+         delete from t_dtsm_dept
+         ]]>
+        <where>
+            <![CDATA[ 
+              and corpid = #{corpid ,jdbcType=VARCHAR }
+            ]]>
+            <if test="deptid != '' and deptid != null" >
+            	<![CDATA[
+                	and deptid = #{deptid,jdbcType=VARCHAR}
+                ]]>
+            </if>
+        </where>
+    </delete>
+    
+	<!-- 数梦平台：删除 -->
+    <delete id="deleteDingTalkDeptDtDream"  parameterType="com.centit.server.dingtalk.manager.po.DeptSync">
+         <![CDATA[
+         delete from t_dtsm_dept
+         ]]>
+        <where>
+            <![CDATA[ 
+              and corpid = #{corpid ,jdbcType=VARCHAR }
+            ]]>
+            <if test="deptnumber != '' and deptnumber != null" >
+            	<![CDATA[
+                	and deptnumber = #{deptnumber,jdbcType=VARCHAR}
+                ]]>
+            </if>
+        </where>
+    </delete>
+
+
+	<!--  查询用户的部门列表 -->
+    <select id="queryDeptListByUser" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+	    <![CDATA[
+	    	select
+			    d.id as id,
+			    d.corpid as corpid,
+			    d.deptid as deptid,
+			    d.parentid as parentid,
+		        d.deptname as deptname
+	    	from t_dtsm_dept d left join t_dtsm_user_dept ud on d.DEPTID = ud.DEPTID
+	    ]]>
+	    <where>
+			<![CDATA[
+				and d.corpid = #{corpid ,jdbcType=VARCHAR }
+				and ud.userid = #{userid ,jdbcType=VARCHAR }
+			]]>
+		</where>
+	</select>
+
+	<!--  查询上级部门 -->
+    <select id="queryParentDept" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.DeptSync">
+	    <![CDATA[
+	    	select
+			    id as id,
+			    deptid as deptid,
+		        deptname as deptname,
+		        parentid as parentid,
+		        sort as sort
+	    	from t_dtsm_dept
+	    ]]>
+	    <where>
+			<![CDATA[
+				and corpid = #{corpid ,jdbcType=VARCHAR }
+				and deptid = #{deptid ,jdbcType=VARCHAR }
+			]]>
+		</where>
+	</select>
+
+	<!--  根绝deptNumber查询deptid -->
+    <select id="queryDeptidByDeptnumber" resultMap="BaseResultMap" parameterType="com.centit.server.dingtalk.manager.po.DeptSync">
+	    <![CDATA[
+	    	select deptid as deptid from t_dtsm_dept
+	    ]]>
+	    <where>
+			<![CDATA[
+				and corpid = #{corpid ,jdbcType=VARCHAR }
+				and deptnumber = #{deptnumber ,jdbcType=VARCHAR }
+			]]>
+		</where>
+	</select>
+
+
+
+
+
+    
+
+</mapper>

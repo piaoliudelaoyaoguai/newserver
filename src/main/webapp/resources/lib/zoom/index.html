@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jquery点击小图全屏显示大图的相册代码</title>
+
+<style type="text/css">
+*{margin:0;padding:0;list-style-type:none;}
+body{overflow-y:scroll;font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, sans-serif;background:#f4f4f4;padding:0;margin:0;}
+a,a:hover{border:none;text-decoration:none;}
+img,a img{border:none;}
+.clear{clear:both;}
+
+/* gallery */
+.zoomed > .gallery{-webkit-filter:blur(3px);filter:blur(3px);}
+.gallery{width:800px;margin:20px auto;}
+.gallery li{float:left;margin:10px; width:80px; height:80px;}
+.gallery li:nth-child(6n){padding-right:0;}
+.gallery li a,.gallery li img{float:left;}
+</style>
+
+<!--图片弹出层样式 必要样式-->
+<link rel="stylesheet"  href="css/zoom.css" media="all" />
+
+</head>
+<body>
+
+<div class="gallery">	 
+	<ul>
+		<li><a href="images/b1.jpg"><img src="images/1.jpg" /></a></li>
+		<li><a href="images/b2.jpg"><img src="images/2.jpg" /></a></li>
+		<li><a href="images/b3.jpg"><img src="images/3.jpg" /></a></li>
+		<li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b1.jpg"><img src="images/1.jpg" /></a></li>
+		<li><a href="images/b2.jpg"><img src="images/2.jpg" /></a></li>
+		<li><a href="images/b3.jpg"><img src="images/3.jpg" /></a></li>
+		<li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b1.jpg"><img src="images/1.jpg" /></a></li>
+		<li><a href="images/b2.jpg"><img src="images/2.jpg" /></a></li>
+		<li><a href="images/b3.jpg"><img src="images/3.jpg" /></a></li>
+		<li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b1.jpg"><img src="images/1.jpg" /></a></li>
+		<li><a href="images/b2.jpg"><img src="images/2.jpg" /></a></li>
+		<li><a href="images/b3.jpg"><img src="images/3.jpg" /></a></li>
+		<li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b1.jpg"><img src="images/1.jpg" /></a></li>
+		<li><a href="images/b2.jpg"><img src="images/2.jpg" /></a></li>
+		<li><a href="images/b3.jpg"><img src="images/3.jpg" /></a></li>
+		<li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b1.jpg"><img src="images/1.jpg" /></a></li>
+		<li><a href="images/b2.jpg"><img src="images/2.jpg" /></a></li>
+		<li><a href="images/b3.jpg"><img src="images/3.jpg" /></a></li>
+		<li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b1.jpg"><img src="images/1.jpg" /></a></li>
+		<li><a href="images/b2.jpg"><img src="images/2.jpg" /></a></li>
+		<li><a href="images/b3.jpg"><img src="images/3.jpg" /></a></li>
+		<li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b1.jpg"><img src="images/1.jpg" /></a></li>
+		<li><a href="images/b2.jpg"><img src="images/2.jpg" /></a></li>
+		<li><a href="images/b3.jpg"><img src="images/3.jpg" /></a></li>
+		<li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b4.jpg"><img src="images/4.jpg" /></a></li>
+		<li><a href="images/b5.jpg"><img src="images/5.jpg" /></a></li>
+        <li><a href="images/b1.jpg"><img src="images/1.jpg" /></a></li>
+		<li><a href="images/b2.jpg"><img src="images/2.jpg" /></a></li>		 
+	</ul>
+	 <div class="clear"></div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/zoom.min.js"></script>
+
+</body>
+</html>

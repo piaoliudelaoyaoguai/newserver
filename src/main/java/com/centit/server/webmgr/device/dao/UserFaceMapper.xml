@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centit.server.webmgr.device.dao.UserFaceDao" >
+
+    <resultMap id="BaseResultMap" type="com.centit.server.webmgr.device.po.UserFace" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+        <result column="userid" property="userid" jdbcType="VARCHAR" />
+        <result column="faceassetid" property="faceassetid" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+        <result column="deleteflag" property="deleteflag" jdbcType="VARCHAR" />
+        <result column="storepath" property="storepath" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--  查询详情 -->
+    <select id="getUserFaceDetail" resultMap="BaseResultMap" parameterType="com.centit.server.webmgr.device.po.UserFace">
+    	<![CDATA[
+	        	select
+	        	t.id as id,
+	        	t.corpid as corpid,
+	        	t.userid as userid,
+	        	t.faceassetid as faceassetid,
+	        	date_format(t.createtime,'%Y-%m-%d %T') as createtime,
+	        	date_format(t.updatetime,'%Y-%m-%d %T') as updatetime,
+	        	t.deleteflag as deleteflag,
+	        	a.storepath as storepath
+				from t_mt_user_facepic t
+				left join t_om_asset a on t.faceassetid = a.id
+         ]]>
+         <where>
+	         <![CDATA[
+	         	and t.corpid = #{corpid,jdbcType=VARCHAR}
+	         	and t.deleteflag = '0'
+	         ]]>
+	         <if test="id != '' and id != null" >
+                <![CDATA[
+					and t.id = #{id,jdbcType=VARCHAR}
+				]]>
+             </if>
+	         <if test="userid != '' and userid != null" >
+                <![CDATA[
+					and t.userid = #{userid,jdbcType=VARCHAR}
+				]]>
+             </if>
+         </where>
+	</select>
+	
+    <!--  查询列表 -->
+    <select id="getUserFaceList" resultMap="BaseResultMap" parameterType="com.centit.server.webmgr.device.po.UserFace">
+    	<![CDATA[
+	        	select
+	        	t.id as id,
+	        	t.corpid as corpid,
+	        	t.userid as userid,
+	        	t.faceassetid as faceassetid,
+	        	date_format(t.createtime,'%Y-%m-%d %T') as createtime,
+	        	date_format(t.updatetime,'%Y-%m-%d %T') as updatetime,
+	        	t.deleteflag as deleteflag,
+	        	a.storepath as storepath
+				from t_mt_user_facepic t
+				left join t_om_asset a on t.faceassetid = a.id
+         ]]>
+         <where>
+	         <![CDATA[
+	         	and t.corpid = #{corpid,jdbcType=VARCHAR}
+	         	and t.deleteflag = '0'
+	         ]]>
+	         <if test="userid != '' and userid != null" >
+                <![CDATA[
+					and t.userid = #{userid,jdbcType=VARCHAR}
+				]]>
+             </if>
+         </where>
+         <![CDATA[
+       			order by t.createtime desc
+         ]]>
+	</select>
+
+
+	<!-- 新增 -->
+	<!-- Mybatis获取插入记录的自增长ID,其中keyProperty是Java对象的属性名，而不是表格的字段名.
+	Mybatis执行完插入语句后，自动将自增长值赋值给对象systemBean的属性id。因此，可通过systemBean对应的getter方法获取！ -->
+	<insert id="insertUserFace" parameterType="com.centit.server.webmgr.device.po.UserFace" useGeneratedKeys="true" keyProperty="id">
+    	<![CDATA[
+			insert into t_mt_user_facepic
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="userid != '' and userid != null" >
+                <![CDATA[
+					userid,
+				]]>
+            </if>
+            <if test="faceassetid != '' and faceassetid != null" >
+                <![CDATA[
+					faceassetid,
+				]]>
+            </if>
+            <![CDATA[
+				createtime,
+			]]>
+            <![CDATA[
+				updatetime,
+			]]>
+            <if test="deleteflag != '' and deleteflag != null" >
+                <![CDATA[
+					deleteflag,
+				]]>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="userid != '' and userid != null" >
+                <![CDATA[
+					#{userid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="faceassetid != '' and faceassetid != null" >
+                <![CDATA[
+					#{faceassetid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <![CDATA[
+				NOW(),
+			]]>
+            <![CDATA[
+				NOW(),
+			]]>
+            <if test="deleteflag != '' and deleteflag != null" >
+                <![CDATA[
+					#{deleteflag,jdbcType=VARCHAR},
+				]]>
+            </if>
+        </trim>
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="updateUserFace" parameterType="com.centit.server.webmgr.device.po.UserFace" >
+		<![CDATA[
+        	update t_mt_user_facepic
+        ]]>
+        <set >
+            <if test="userid != '' and userid != null" >
+            	<![CDATA[
+                	userid = #{userid,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="faceassetid != '' and faceassetid != null" >
+            	<![CDATA[
+                	faceassetid = #{faceassetid,jdbcType=VARCHAR},
+                ]]>
+            </if>
+           	<![CDATA[
+               	updatetime = NOW(),
+            ]]>
+            <if test="deleteflag != '' and deleteflag != null" >
+            	<![CDATA[
+                	deleteflag = #{deleteflag,jdbcType=VARCHAR},
+                ]]>
+            </if>
+        </set>
+        <where>
+			<![CDATA[
+				and corpid = #{corpid ,jdbcType=VARCHAR }
+				and id = #{id ,jdbcType=VARCHAR }
+			]]>
+			<if test="userid != '' and userid != null" >
+            	<![CDATA[
+                	userid = #{userid,jdbcType=VARCHAR},
+                ]]>
+            </if>
+		</where>
+    </update>
+    
+    <!-- 删除 -->
+    <delete id="deleteUserFace"  parameterType="com.centit.server.webmgr.device.po.UserFace">
+         <![CDATA[
+         delete from t_mt_user_facepic 
+         ]]>
+        <where>
+            <![CDATA[ 
+              and corpid = #{corpid ,jdbcType=VARCHAR }
+              and id = #{id ,jdbcType=VARCHAR }
+            ]]>
+        </where>
+    </delete>
+    
+    <!-- REPLACE：corpid和userid为唯一索引，有则更新，无则插入 -->
+	<insert id="replaceUserFace" parameterType="com.centit.server.webmgr.device.po.UserFace">
+    	<![CDATA[
+			replace into t_mt_user_facepic
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="userid != '' and userid != null" >
+                <![CDATA[
+					userid,
+				]]>
+            </if>
+            <if test="faceassetid != '' and faceassetid != null" >
+                <![CDATA[
+					faceassetid,
+				]]>
+            </if>
+            <![CDATA[
+				createtime,
+			]]>
+            <![CDATA[
+				updatetime,
+			]]>
+            <if test="deleteflag != '' and deleteflag != null" >
+                <![CDATA[
+					deleteflag,
+				]]>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="userid != '' and userid != null" >
+                <![CDATA[
+					#{userid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="faceassetid != '' and faceassetid != null" >
+                <![CDATA[
+					#{faceassetid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <![CDATA[
+				NOW(),
+			]]>
+            <![CDATA[
+				NOW(),
+			]]>
+            <if test="deleteflag != '' and deleteflag != null" >
+                <![CDATA[
+					#{deleteflag,jdbcType=VARCHAR},
+				]]>
+            </if>
+        </trim>
+    </insert>
+    
+</mapper>

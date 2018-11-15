@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centit.server.dingtalk.manager.dao.UserDeptSyncDao" >
+
+    <resultMap id="BaseResultMap" type="com.centit.server.dingtalk.manager.po.UserDeptSync" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+        <result column="userid" property="userid" jdbcType="VARCHAR" />
+        <result column="deptid" property="deptid" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+	<!-- 新增 -->
+	<!-- Mybatis获取插入记录的自增长ID,其中keyProperty是Java对象的属性名，而不是表格的字段名.
+	Mybatis执行完插入语句后，自动将自增长值赋值给对象systemBean的属性id。因此，可通过systemBean对应的getter方法获取！ -->
+    <insert id="insertDingTalkUserDept" parameterType="com.centit.server.dingtalk.manager.po.UserDeptSync" useGeneratedKeys="true" keyProperty="id">
+    	<![CDATA[
+			insert into t_dtsm_user_dept
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="userid != '' and userid != null" >
+                <![CDATA[
+					userid,
+				]]>
+            </if>
+            <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					deptid,
+				]]>
+            </if>
+            <if test="sort != '' and sort != null" >
+                <![CDATA[
+					sort,
+				]]>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="userid != '' and userid != null" >
+                <![CDATA[
+					#{userid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					#{deptid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="sort != '' and sort != null" >
+                <![CDATA[
+					#{sort,jdbcType=VARCHAR},
+				]]>
+            </if>
+        </trim>
+    </insert>
+
+
+	<!-- 删除 -->
+    <delete id="deleteDingTalkUserDept"  parameterType="com.centit.server.dingtalk.manager.po.UserDeptSync">
+         <![CDATA[
+         delete from t_dtsm_user_dept 
+         ]]>
+        <where>
+            <![CDATA[ 
+              and corpid = #{corpid ,jdbcType=VARCHAR }
+            ]]>
+            <if test="userid != '' and userid != null" >
+            	<![CDATA[
+                	and userid = #{userid,jdbcType=VARCHAR}
+                ]]>
+            </if>
+            <if test="deptid != '' and deptid != null" >
+            	<![CDATA[
+                	and deptid = #{deptid,jdbcType=VARCHAR}
+                ]]>
+            </if>
+        </where>
+    </delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+</mapper>

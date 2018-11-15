@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centit.server.webmgr.device.dao.DeviceDao" >
+
+	<!-- 设备 -->
+    <resultMap id="BaseResultMap" type="com.centit.server.webmgr.device.po.Device" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+        <result column="deviceid" property="deviceid" jdbcType="VARCHAR" />
+        <result column="nick" property="nick" jdbcType="VARCHAR" />
+        <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+        <result column="devicetypename" property="devicetypename" jdbcType="VARCHAR" />
+        <result column="devicetype" property="devicetype" jdbcType="VARCHAR" />
+        <result column="deviceserviceid" property="deviceserviceid" jdbcType="VARCHAR" />
+        <result column="mark" property="mark" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+
+        <result column="roomid" property="roomid" jdbcType="VARCHAR" />
+        <result column="roomname" property="roomname" jdbcType="VARCHAR" />
+    </resultMap>
+
+	<!-- XXX -->
+    <resultMap id="MeetingRoomResultMap" type="java.util.HashMap" >
+        <result column="roomid" property="roomid" jdbcType="VARCHAR" />
+        <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+        <result column="roomname" property="roomname" jdbcType="VARCHAR" />
+        <result column="deptid" property="deptid" jdbcType="VARCHAR" />
+        <result column="deptname" property="deptname" jdbcType="VARCHAR" />
+        <result column="place" property="place" jdbcType="VARCHAR" />
+        <result column="peoplenum" property="peoplenum" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="appliances" property="appliances" jdbcType="VARCHAR" />
+    </resultMap>
+
+	<!--  查询详情 -->
+    <select id="queryDetail" resultMap="BaseResultMap" parameterType="com.centit.server.webmgr.device.po.Device">
+	    <![CDATA[
+	    	select
+		    	t.id as id,
+		    	t.corpid as corpid,
+		    	t.deviceid as deviceid,
+		    	t.nick as nick,
+		    	t.avatar as avatar,
+		    	t.devicetypename as devicetypename,
+		    	t.devicetype as devicetype,
+		    	t.deviceserviceid as deviceserviceid,
+		    	t.mark as mark,
+		    	date_format(t.createtime,'%Y-%m-%d %T') as createtime,
+		    	date_format(t.updatetime,'%Y-%m-%d %T') as updatetime,
+				md.ROOMID as roomid
+	    	from T_DT_DEVICE t left join t_mt_meetingroom_device md on t.DEVICEID = md.DEVICEID
+	    ]]>
+	    <where>
+	         <![CDATA[
+	         	and t.corpid = #{corpid,jdbcType=VARCHAR}
+	         	and md.corpid = #{corpid,jdbcType=VARCHAR}
+	         ]]>
+	         <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					and t.deviceid = #{deviceid,jdbcType=VARCHAR}
+				]]>
+            </if>
+        </where>
+	</select>
+	
+	<!--  查询列表 -->
+    <select id="queryList" resultMap="BaseResultMap" parameterType="com.centit.server.webmgr.device.po.Device">
+	    <![CDATA[
+	    	select
+		    	t.id as id,
+		    	t.corpid as corpid,
+		    	t.deviceid as deviceid,
+		    	t.nick as nick,
+		    	t.avatar as avatar,
+		    	t.devicetypename as devicetypename,
+		    	t.devicetype as devicetype,
+		    	t.deviceserviceid as deviceserviceid,
+		    	t.mark as mark,
+		    	date_format(t.createtime,'%Y-%m-%d %T') as createtime,
+		    	date_format(t.updatetime,'%Y-%m-%d %T') as updatetime
+	    	from T_DT_DEVICE t 
+	    ]]>
+	    <where>
+	         <![CDATA[
+	         	and t.corpid = #{corpid,jdbcType=VARCHAR}
+	         ]]>
+	         <if test="deviceserviceid != '' and deviceserviceid != null" >
+                <![CDATA[
+					and t.deviceserviceid = #{deviceserviceid,jdbcType=VARCHAR}
+				]]>
+            </if>
+        </where>
+	</select>
+
+
+	<!-- 新增 -->
+	<!-- Mybatis获取插入记录的自增长ID,其中keyProperty是Java对象的属性名，而不是表格的字段名.
+	Mybatis执行完插入语句后，自动将自增长值赋值给对象systemBean的属性id。因此，可通过systemBean对应的getter方法获取！ -->
+	<insert id="insertDevice" parameterType="com.centit.server.webmgr.device.po.Device" useGeneratedKeys="true" keyProperty="id">
+    	<![CDATA[
+			insert into T_DT_DEVICE
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					deviceid,
+				]]>
+            </if>
+            <if test="nick != '' and nick != null" >
+                <![CDATA[
+					nick,
+				]]>
+            </if>
+            <if test="avatar != '' and avatar != null" >
+                <![CDATA[
+					avatar,
+				]]>
+            </if>
+            <if test="devicetypename != '' and devicetypename != null" >
+                <![CDATA[
+					devicetypename,
+				]]>
+            </if>
+            <if test="devicetype != '' and devicetype != null" >
+                <![CDATA[
+					devicetype,
+				]]>
+            </if>
+            <if test="deviceserviceid != '' and deviceserviceid != null" >
+                <![CDATA[
+					deviceserviceid,
+				]]>
+            </if>
+            <if test="mark != '' and mark != null" >
+                <![CDATA[
+					mark,
+				]]>
+            </if>
+            <![CDATA[
+				createtime,
+			]]>
+            <![CDATA[
+				updatetime,
+			]]>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					#{deviceid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="nick != '' and nick != null" >
+                <![CDATA[
+					#{nick,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="avatar != '' and avatar != null" >
+                <![CDATA[
+					#{avatar,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="devicetypename != '' and devicetypename != null" >
+                <![CDATA[
+					#{devicetypename,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="devicetype != '' and devicetype != null" >
+                <![CDATA[
+					#{devicetype,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deviceserviceid != '' and deviceserviceid != null" >
+                <![CDATA[
+					#{deviceserviceid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="mark != '' and mark != null" >
+                <![CDATA[
+					#{mark,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <![CDATA[
+				NOW(),
+			]]>
+            <![CDATA[
+				NOW(),
+			]]>
+        </trim>
+    </insert>
+    
+    
+    <!-- 更新 -->
+    <update id="updateDevice" parameterType="com.centit.server.webmgr.device.po.Device" >
+		<![CDATA[
+        	update T_DT_DEVICE
+        ]]>
+        <set >
+            <if test="nick != '' and nick != null" >
+            	<![CDATA[
+                	nick = #{nick,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="avatar != '' and avatar != null" >
+            	<![CDATA[
+                	avatar = #{avatar,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="devicetypename != '' and devicetypename != null" >
+            	<![CDATA[
+                	devicetypename = #{devicetypename,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="devicetype != '' and devicetype != null" >
+            	<![CDATA[
+                	devicetype = #{devicetype,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="deviceserviceid != '' and deviceserviceid != null" >
+            	<![CDATA[
+                	deviceserviceid = #{deviceserviceid ,jdbcType=VARCHAR },
+                ]]>
+            </if>
+            <if test="mark != '' and mark != null" >
+            	<![CDATA[
+                	mark = #{mark,jdbcType=VARCHAR},
+                ]]>
+            </if>
+            <if test="updatetime != '' and updatetime != null" >
+            	<![CDATA[
+                	updatetime = NOW(),
+                ]]>
+            </if>
+        </set>
+        <where>
+			<![CDATA[
+				and id = #{id ,jdbcType=VARCHAR } 
+				and corpid = #{corpid ,jdbcType=VARCHAR } 
+				and deviceid = #{deviceid ,jdbcType=VARCHAR } 
+			]]>
+		</where>
+    </update>
+    
+    
+    <!-- 删除 -->
+    <delete id="deleteDevice"  parameterType="com.centit.server.webmgr.device.po.Device">
+         <![CDATA[
+         delete from T_DT_DEVICE 
+         ]]>
+        <where>
+            <![CDATA[ 
+              and id = #{id ,jdbcType=VARCHAR }
+              and corpid = #{corpid ,jdbcType=VARCHAR }
+            ]]>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					and deviceid = #{deviceid,jdbcType=VARCHAR}
+				]]>
+            </if>
+            <if test="deviceserviceid != '' and deviceserviceid != null" >
+                <![CDATA[
+					and deviceserviceid = #{deviceserviceid,jdbcType=VARCHAR}
+				]]>
+            </if>
+        </where>
+    </delete>
+    
+    
+    <!-- REPLACE：deviceid为唯一索引，有则更新，无则插入 -->
+	<insert id="replaceDevice" parameterType="com.centit.server.webmgr.device.po.Device">
+    	<![CDATA[
+			replace into T_DT_DEVICE
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					deviceid,
+				]]>
+            </if>
+            <if test="nick != '' and nick != null" >
+                <![CDATA[
+					nick,
+				]]>
+            </if>
+            <if test="avatar != '' and avatar != null" >
+                <![CDATA[
+					avatar,
+				]]>
+            </if>
+            <if test="devicetypename != '' and devicetypename != null" >
+                <![CDATA[
+					devicetypename,
+				]]>
+            </if>
+            <if test="devicetype != '' and devicetype != null" >
+                <![CDATA[
+					devicetype,
+				]]>
+            </if>
+            <if test="deviceserviceid != '' and deviceserviceid != null" >
+                <![CDATA[
+					deviceserviceid,
+				]]>
+            </if>
+            <if test="mark != '' and mark != null" >
+                <![CDATA[
+					mark,
+				]]>
+            </if>
+            <![CDATA[
+				createtime,
+			]]>
+            <![CDATA[
+				updatetime,
+			]]>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					#{deviceid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="nick != '' and nick != null" >
+                <![CDATA[
+					#{nick,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="avatar != '' and avatar != null" >
+                <![CDATA[
+					#{avatar,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="devicetypename != '' and devicetypename != null" >
+                <![CDATA[
+					#{devicetypename,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="devicetype != '' and devicetype != null" >
+                <![CDATA[
+					#{devicetype,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deviceserviceid != '' and deviceserviceid != null" >
+                <![CDATA[
+					#{deviceserviceid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="mark != '' and mark != null" >
+                <![CDATA[
+					#{mark,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <![CDATA[
+				NOW(),
+			]]>
+            <![CDATA[
+				NOW(),
+			]]>
+        </trim>
+    </insert>
+    
+    
+    <!--  查询设备-XXX关联列表 -->
+    <select id="queryDeviceMeetingRoomList" resultMap="BaseResultMap" parameterType="com.centit.server.webmgr.device.po.Device">
+	    <![CDATA[
+	    	select
+		    	t.id as id,
+		    	t.corpid as corpid,
+		    	t.deviceid as deviceid,
+		    	t.nick as nick,
+		    	t.avatar as avatar,
+		    	t.devicetypename as devicetypename,
+		    	t.devicetype as devicetype,
+		    	t.deviceserviceid as deviceserviceid,
+		    	t.mark as mark,
+		    	date_format(t.createtime,'%Y-%m-%d %T') as createtime,
+		    	date_format(t.updatetime,'%Y-%m-%d %T') as updatetime,
+				(select r.roomid from t_mt_meetingroom r LEFT JOIN t_mt_meetingroom_device md on r.roomid = md.roomid where md.deviceid = t.deviceid and r.isdeleted = '0') as roomid,
+       			(select r.roomname from t_mt_meetingroom r LEFT JOIN t_mt_meetingroom_device md on r.roomid = md.roomid where md.deviceid = t.deviceid and r.isdeleted = '0') as roomname,
+       			(select n.deptname from t_dt_node n LEFT JOIN t_dt_device_node dn on n.id = dn.nodeid where dn.deviceid = t.deviceid) as deptname,
+       			(select n.id from t_dt_node n LEFT JOIN t_dt_device_node dn on n.id = dn.nodeid where dn.deviceid = t.deviceid) as nodeid
+	    	from T_DT_DEVICE t 
+	    ]]>
+	    <where>
+	         <![CDATA[
+	         	and t.corpid = #{corpid,jdbcType=VARCHAR}
+	         ]]>
+	         <if test="deviceserviceid != '' and deviceserviceid != null" >
+                <![CDATA[
+					and t.deviceserviceid = #{deviceserviceid,jdbcType=VARCHAR}
+				]]>
+            </if>
+        </where>
+	</select>
+
+
+    <!--  M2查询可绑定的XXX列表（分页） -->
+    <select id="queryCanBindMeetingRoomList" resultMap="MeetingRoomResultMap" parameterType="java.util.HashMap">
+	    <![CDATA[
+	    	select
+	    		r.roomid as roomid,
+	    		r.corpid as corpid,
+	    		r.roomname as roomname,
+	    		r.deptid as deptid,
+	    		r.deptname as deptname,
+	    		r.place as place,
+	    		r.peoplenum as peoplenum,
+	    		r.url as url,
+	    		(select group_concat(a.name SEPARATOR ',') from t_mt_appliances a left join t_mt_meetingroom_appliances ma on a.ALID = ma.alid  where ma.roomid = r.roomid) as appliances
+			from t_mt_meetingroom r 
+	    ]]>
+	    <where>
+	         <![CDATA[
+	         	and r.corpid = #{corpid,jdbcType=VARCHAR}
+	         	and r.isdeleted='0'
+	         	and r.isenabled='1'
+	         ]]>
+	         <!-- and r.roomid not in (select ifnull(roomid,'') from t_mt_meetingroom_device where corpid = #{corpid,jdbcType=VARCHAR}) -->
+	         <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					and r.deptid = #{deptid,jdbcType=VARCHAR}
+				]]>
+            </if>
+            <if test="queryTerm != '' and queryTerm != null" >
+                <![CDATA[
+					and r.roomname like CONCAT(CONCAT('%',#{queryTerm ,jdbcType=VARCHAR}),'%')
+					or r.deptname like CONCAT(CONCAT('%',#{queryTerm ,jdbcType=VARCHAR}),'%')
+				]]>
+            </if>
+        </where>
+        <![CDATA[
+	         limit #{pageNum, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+	    ]]>
+	</select>
+
+    <!--  M2查询可绑定的XXX列表总数（分页） -->
+    <select id="queryCanBindMeetingRoomListCount" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+	    <![CDATA[
+	    	select count(0) from t_mt_meetingroom r 
+	    ]]>
+	    <where>
+	         <![CDATA[
+	         	and r.corpid = #{corpid,jdbcType=VARCHAR}
+	         	and r.isdeleted='0'
+	         	and r.isenabled='1'
+	         ]]>
+	         <!-- and r.roomid not in (select ifnull(roomid,'') from t_mt_meetingroom_device where corpid = #{corpid,jdbcType=VARCHAR}) -->
+	         <if test="deptid != '' and deptid != null" >
+                <![CDATA[
+					and r.deptid = #{deptid,jdbcType=VARCHAR}
+				]]>
+            </if>
+            <if test="queryTerm != '' and queryTerm != null" >
+                <![CDATA[
+					and r.roomname like CONCAT(CONCAT('%',#{queryTerm ,jdbcType=VARCHAR}),'%')
+					or r.deptname like CONCAT(CONCAT('%',#{queryTerm ,jdbcType=VARCHAR}),'%')
+				]]>
+            </if>
+        </where>
+	</select>
+
+    <!--  XXX查询可绑定的M2列表 -->
+    <select id="queryCanBindM2List" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+	    <![CDATA[
+	    	select
+	    		t.id as id,
+		    	t.corpid as corpid,
+		    	t.deviceid as deviceid,
+		    	t.nick as nick,
+		    	t.avatar as avatar,
+		    	t.devicetypename as devicetypename,
+		    	t.devicetype as devicetype,
+		    	t.deviceserviceid as deviceserviceid,
+		    	t.mark as mark,
+		    	date_format(t.createtime,'%Y-%m-%d %T') as createtime,
+		    	date_format(t.updatetime,'%Y-%m-%d %T') as updatetime
+			from T_DT_DEVICE t
+	    ]]>
+	    <where>
+	         <![CDATA[
+	         	and t.corpid = #{corpid,jdbcType=VARCHAR}
+				and t.deviceid not in (select ifnull(deviceid,'') from t_mt_meetingroom_device where corpid = #{corpid,jdbcType=VARCHAR})
+	         ]]>
+	         <if test="nick != '' and nick != null" >
+                <![CDATA[
+					and t.nick like CONCAT(CONCAT('%',#{nick ,jdbcType=VARCHAR}),'%')
+				]]>
+            </if>
+        </where>
+	</select>
+	
+	<!--  查询设备是否已绑定XXX -->
+    <select id="queryDeviceRoomBind" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+	    <![CDATA[
+	    	select
+		    	count(0)
+	    	from t_mt_meetingroom_device
+	    ]]>
+	    <where>
+	         <![CDATA[
+	         	and corpid = #{corpid,jdbcType=VARCHAR}
+	         ]]>
+	         <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					and deviceid = #{deviceid,jdbcType=VARCHAR}
+				]]>
+            </if>
+        </where>
+	</select>
+	
+	<!-- 插入设备-XX关联表 -->
+	<insert id="insertDeviceMeetingRoom" parameterType="java.util.HashMap">
+    	<![CDATA[
+			insert into t_mt_meetingroom_device
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					deviceid,
+				]]>
+            </if>
+            <if test="roomid != '' and roomid != null" >
+                <![CDATA[
+					roomid,
+				]]>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					#{deviceid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="roomid != '' and roomid != null" >
+                <![CDATA[
+					#{roomid,jdbcType=VARCHAR},
+				]]>
+            </if>
+        </trim>
+    </insert>
+    
+    <!-- 删除XXX-设备关联表 -->
+    <delete id="deleteMeetingRoomDevice"  parameterType="com.centit.server.webmgr.device.po.Device">
+         <![CDATA[
+         	delete from T_MT_MEETINGROOM_DEVICE
+         ]]>
+        <where>
+            <![CDATA[ 
+              and corpid = #{corpid,jdbcType=VARCHAR}
+            ]]>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					and deviceid = #{deviceid,jdbcType=VARCHAR}
+				]]>
+            </if>
+            <if test="roomid != '' and roomid != null" >
+                <![CDATA[
+					and roomid = #{roomid,jdbcType=VARCHAR}
+				]]>
+            </if>
+        </where>
+    </delete>
+    
+    <!--  查询设备是否已绑定虚拟节点 -->
+    <select id="queryDeviceM2NodeBind" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+	    <![CDATA[
+	    	select count(0) from t_dt_device_node
+	    ]]>
+	    <where>
+	         <![CDATA[
+	         	and corpid = #{corpid,jdbcType=VARCHAR}
+	         ]]>
+	         <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					and deviceid = #{deviceid,jdbcType=VARCHAR}
+				]]>
+            </if>
+        </where>
+	</select>
+	
+	<!-- 插入设备-XX虚拟节点表 -->
+	<insert id="insertDeviceM2Node" parameterType="java.util.HashMap">
+    	<![CDATA[
+			insert into t_dt_device_node
+		]]>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					id,
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					corpid,
+				]]>
+            </if>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					deviceid,
+				]]>
+            </if>
+            <if test="nodeid != '' and nodeid != null" >
+                <![CDATA[
+					nodeid,
+				]]>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != '' and id != null" >
+                <![CDATA[
+					#{id,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="corpid != '' and corpid != null" >
+                <![CDATA[
+					#{corpid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					#{deviceid,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="nodeid != '' and nodeid != null" >
+                <![CDATA[
+					#{nodeid,jdbcType=VARCHAR},
+				]]>
+            </if>
+        </trim>
+    </insert>
+    
+    <!-- 删除XXX-设备虚拟设备表 -->
+    <delete id="deleteDeviceM2Node"  parameterType="com.centit.server.webmgr.device.po.Device">
+         <![CDATA[
+         	delete from t_dt_device_node
+         ]]>
+        <where>
+            <![CDATA[ 
+              and corpid = #{corpid,jdbcType=VARCHAR}
+            ]]>
+            <if test="deviceid != '' and deviceid != null" >
+                <![CDATA[
+					and deviceid = #{deviceid,jdbcType=VARCHAR}
+				]]>
+            </if>
+            <if test="nodeid != '' and nodeid != null" >
+                <![CDATA[
+					and nodeid = #{nodeid,jdbcType=VARCHAR}
+				]]>
+            </if>
+        </where>
+    </delete>
+    
+
+</mapper>
